@@ -12,6 +12,8 @@ interface HeroCreateDto {
   spells: Spell[]
 }
 
+type HeroUpdateDto = Partial<HeroCreateDto>
+
 export interface Spell {
   id: number
   x: number
@@ -21,6 +23,8 @@ export interface Spell {
   direction: number
   speed: number
 }
+
+type SpellUpdateDto = Partial<Spell>
 
 export class Hero {
   public id: number
@@ -77,7 +81,7 @@ export class Hero {
     speedAttack,
     directionAttack,
     spells,
-  }: Partial<HeroCreateDto>) {
+  }: HeroUpdateDto) {
     Object.assign(this, {
       id,
       x,
@@ -102,6 +106,12 @@ export class Hero {
       speed: this.speedAttack,
       x: this.x,
       y: this.y,
+    })
+  }
+
+  updateSpells() {
+    this.spells.filter((spell) => {
+      return spell.x < 800 && spell.x > 0
     })
   }
 }
