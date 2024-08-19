@@ -69,6 +69,22 @@ export class Hero {
     this.speed = speed
   }
 
+  
+
+  moveHero() {
+    this.y += this.direction * this.speed
+
+    if (this.y + this.radius > Number(canvasRef.current?.height)) {
+      thi.direction = -1 // Изменение направления
+      dispatch(
+        updateHero({
+          heroId: hero.id,
+          updateHeroDto: { direction: hero.direction },
+        })
+      )
+    }
+  }
+
   update({
     id,
     x,
