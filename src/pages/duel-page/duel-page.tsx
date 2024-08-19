@@ -92,16 +92,18 @@ export const DuelPage = () => {
 
     const circles = JSON.parse(JSON.stringify(heroes))
 
+    let animationFrameId: number | null = null
+
     const animate = () => {
       updateHeroes(circles)
 
       drawHero(circles, ctx)
-      requestAnimationFrame(animate)
+      animationFrameId = requestAnimationFrame(animate)
     }
 
     animate()
 
-    return () => cancelAnimationFrame(animate)
+    return () => cancelAnimationFrame(Number(animationFrameId))
   }, [
     heroes[0].speed,
     heroes[1].speed,
