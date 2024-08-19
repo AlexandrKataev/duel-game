@@ -1,3 +1,5 @@
+import { DEFAULT_SPEED } from '../config/config'
+
 interface HeroCreateDto {
   id: number
   x: number
@@ -70,11 +72,11 @@ export class Hero {
   }
 
   changeDirection() {
-    this.direction *= -1
+    this.direction = this.direction * -1
   }
 
   // двигаем героя в зависимости от направления и скорости передвижения героя
-  move(canvasHeight: number) {
+  public move(canvasHeight: number) {
     this.y += this.direction * this.speed
     // меняем направление движения героя по достижению границы канваса
     if (this.y + this.radius > canvasHeight || this.y < this.radius) {
@@ -131,12 +133,40 @@ export class Hero {
       .map((spell) => {
         return {
           ...spell,
-          x: (spell.x += this.directionAttack * this.speedAttack),
+          x: (spell.x = spell.x + this.directionAttack * 4),
         }
       })
-      // удаляем заклинания, за границу канваса
-      .filter((spell) => {
-        return spell.x < 800 && spell.x > 0
-      })
+    // удаляем заклинания, за границу канваса
+    // .filter((spell) => {
+    //   return spell.x < 800 && spell.x > 0
+    // })
   }
 }
+
+export const heroOne = new Hero({
+  id: 1,
+  x: 50,
+  y: 40,
+  radius: 40,
+  color: '#3795BD',
+  direction: 1,
+  speed: DEFAULT_SPEED,
+  colorAttack: '#91DDCF',
+  speedAttack: 1000,
+  directionAttack: 1,
+  spells: [],
+})
+
+export const heroTwo = new Hero({
+  id: 2,
+  x: 750,
+  y: 40,
+  radius: 40,
+  color: '#FF7777',
+  direction: 1,
+  speed: DEFAULT_SPEED,
+  colorAttack: '#FFAAAA',
+  speedAttack: 2500,
+  directionAttack: -1,
+  spells: [],
+})
