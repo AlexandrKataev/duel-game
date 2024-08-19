@@ -69,22 +69,20 @@ export class Hero {
     this.speed = speed
   }
 
-  
+  changeDirection() {
+    this.direction *= -1
+  }
 
-  moveHero() {
+  // двигаем героя в зависимости от направления и скорости передвижения героя
+  move(canvasHeight: number) {
     this.y += this.direction * this.speed
-
-    if (this.y + this.radius > Number(canvasRef.current?.height)) {
-      thi.direction = -1 // Изменение направления
-      dispatch(
-        updateHero({
-          heroId: hero.id,
-          updateHeroDto: { direction: hero.direction },
-        })
-      )
+    // меняем направление движения героя по достижению границы канваса
+    if (this.y + this.radius > canvasHeight || this.y < this.radius) {
+      this.changeDirection()
     }
   }
 
+  // обновить героя
   update({
     id,
     x,
@@ -113,6 +111,7 @@ export class Hero {
     })
   }
 
+  // выпустить заклинание
   attack() {
     this.spells.push({
       id: Math.random(),
@@ -125,9 +124,19 @@ export class Hero {
     })
   }
 
+  // обновление атак(заклинаний)
   updateSpells() {
-    this.spells.filter((spell) => {
-      return spell.x < 800 && spell.x > 0
-    })
+    this.spells = this.spells
+      // двигаем заклинание в зависимости от скорости и направления атаки героя
+      .map((spell) => {
+        return {
+          ...spell,
+          x: (spell.x += this.directionAttack * this.speedAttack),
+        }
+      })
+      // удаляем заклинания, за границу канваса
+      .filter((spell) => {
+        return spell.x < 800 && spell.x > 0
+      })
   }
 }
