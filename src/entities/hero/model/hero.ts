@@ -84,6 +84,13 @@ export class Hero {
     }
   }
 
+  isPointInside(x: number, y: number) {
+    const distance = Math.sqrt(
+      Math.pow(x - this.x, 2) + Math.pow(y - this.y, 2)
+    )
+    return distance <= this.radius
+  }
+
   // обновить героя
   update({
     id,

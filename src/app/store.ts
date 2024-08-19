@@ -1,12 +1,9 @@
-import { heroSlice } from '@entities/hero'
 import { configureStore } from '@reduxjs/toolkit'
 import { useDispatch, useSelector } from 'react-redux'
 
 // ...
 const store = configureStore({
-  reducer: {
-    hero: heroSlice.reducer,
-  },
+  reducer: {},
 })
 
 export type RootState = ReturnType<typeof store.getState>
